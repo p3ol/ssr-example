@@ -8,16 +8,16 @@ const Free = () => {
   const { lib: audit, config } = useAudit();
   const { premium } = useAuth();
 
-  useEffect(() => {
-    init();
-  }, [audit, init]);
-
   const init = useCallback(() => {
     audit?.config({
       ...config,
       user_is_premium: premium || false,
     });
   }, [audit, config, premium]);
+
+  useEffect(() => {
+    init();
+  }, [audit, init]);
 
   const onLogin = useCallback(async () => {
     init();

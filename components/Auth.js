@@ -7,7 +7,7 @@ const Auth = ({ children }) => {
   const [connected, setConnected] = useState(false);
   const [premium, setPremium] = useState(false);
 
-  const login = async e => {
+  const login = useCallback(async e => {
     e?.preventDefault();
 
     if (connecting) {
@@ -20,17 +20,19 @@ const Auth = ({ children }) => {
     setConnecting(false);
     setConnected(true);
     setPremium(true);
-  };
+  }, [connecting]);
 
   const getContext = useCallback(() => ({
     login,
     connecting,
     connected,
     premium,
-  }), [connecting, connected, premium]);
+  }), [connecting, connected, premium, login]);
 
   return (
-    <AuthContext.Provider value={getContext()} children={children} />
+    <AuthContext.Provider value={getContext()}>
+      { children }
+    </AuthContext.Provider>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useAudit } from '@poool/react-access';
 
@@ -11,18 +11,18 @@ const Home = () => {
 
   useEffect(() => {
     init();
-  }, [audit]);
+  }, [audit, init]);
 
-  const init = async () => {
+  const init = useCallback(() => {
     audit?.config({
       ...config,
       user_is_premium: premium || false,
     });
-  };
+  }, [audit, config, premium]);
 
-  const onLogin = async () => {
+  const onLogin = useCallback(() => {
     init();
-  };
+  }, [init]);
   
   return (
     <div className="page home">

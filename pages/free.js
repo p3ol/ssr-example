@@ -10,19 +10,19 @@ const Free = () => {
 
   useEffect(() => {
     init();
-  }, [audit]);
+  }, [audit, init]);
 
-  const init = async () => {
+  const init = useCallback(() => {
     audit?.config({
       ...config,
       user_is_premium: premium || false,
     });
-  };
+  }, [audit, config, premium]);
 
-  const onLogin = async () => {
+  const onLogin = useCallback(async () => {
     init();
     await audit?.sendEvent('page-view', 'free');
-  };
+  }, [audit, init]);
 
   return (
     <div className="page free">
